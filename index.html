@@ -15,7 +15,6 @@
         .hero { width: 90%; max-width: 320px; border-radius: 20px; border: 6px solid white; box-shadow: 0 10px 20px rgba(0,0,0,0.1); margin: 20px auto; }
         .t-box { background: white; padding: 10px; border-radius: 12px; border: 1.5px solid #ff69b4; min-width: 45px; display: inline-block; margin: 0 3px; }
         .t-box span { display: block; font-size: 1.2rem; font-weight: bold; color: #ff69b4; }
-        /* Անիմացիա արքայադուստրերի համար */
         .p-card { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 20px 0; background: white; padding: 15px; border-radius: 20px; opacity: 0; transform: translateY(30px); transition: 0.8s; }
         .p-card.visible { opacity: 1; transform: translateY(0); }
         .p-img { width: 90px; height: 90px; object-fit: contain; }
@@ -25,11 +24,11 @@
     </style>
 </head>
 <body>
-    <audio id="mus" src="music.mp3" loop preload="auto"></audio>
+    <audio id="mus" src="music.mp3" loop preload="auto" playsinline></audio>
     <div id="scr">
         <div id="cont">
             <img src="bow.png" id="bow">
-            <p style="color:#ff69b4; font-family:'Dancing Script'; font-size: 1.5rem;">Քաշիր ներքև</p>
+            <p style="color:#ff69b4; font-family:'Dancing Script'; font-size: 1.5rem;">Քաշիր բանտիկը ներքև</p>
         </div>
         <div class="dr dr-l" style="left:0"></div><div class="dr dr-r" style="right:0"></div>
     </div>
@@ -51,13 +50,18 @@
             <input type="tel" id="ph" placeholder="Հեռախոս">
             <input type="number" id="c" placeholder="Հյուրերի քանակ">
             <button onclick="send()">Ուղարկել WhatsApp</button>
-            <iframe style="width:100%; height:180px; border-radius:15px; border:1px solid #ffb6c1; margin-top:20px;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3048.2!2d44.5!3d40.1!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDA2JzAwLjAiTiA0NMKwMzAnMDAuMCJF!5e0!3m2!1shy!2s!4v1600000000000"></iframe>
+            <iframe style="width:100%; height:180px; border-radius:15px; border:1px solid #ffb6c1; margin-top:20px;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3048.24355531065!2d44.5126!3d40.1776!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDEwJzM5LjQiTiA0NMKwMzAnNDUuNCJF!5e0!3m2!1shy!2sam!4v1640000000000"></iframe>
         </div>
         <p style="font-family:'Dancing Script'; font-size: 2.5rem; color:#ff69b4; margin: 40px 0;">Սիրով` Էլլա ♡</p>
     </div>
     <script>
-        let sY = 0, drag = false, b = document.getElementById('bow'), s = document.getElementById('scr'), m = document.getElementById('main');
+        let sY = 0, drag = false, b = document.getElementById('bow'), s = document.getElementById('scr'), m = document.getElementById('main'), audio = document.getElementById('mus');
         
+        // Սա օգնում է, որ հեռախոսը միացնի ձայնը հենց առաջին հպումից
+        document.getElementById('scr').addEventListener('touchstart', function() {
+            audio.play().then(() => { audio.pause(); }).catch(() => {});
+        }, { once: true });
+
         document.getElementById('cont').ontouchstart = (e) => { drag = true; sY = e.touches[0].pageY; b.style.transition = 'none'; };
         
         window.ontouchmove = (e) => {
@@ -71,24 +75,19 @@
 
         function finish() {
             if (!drag) return; drag = false;
-            document.getElementById('mus').play().catch(()=>{});
+            audio.play().catch(() => { console.log("Play failed"); });
             s.classList.add('open');
             setTimeout(() => {
                 m.style.display = 'block';
-                setTimeout(() => { 
-                    m.style.opacity = 1; 
-                    s.style.display = 'none'; 
-                    document.body.style.overflowY = 'auto';
-                    startAnims();
-                }, 50);
+                setTimeout(() => { m.style.opacity = 1; s.style.display = 'none'; document.body.style.overflowY = 'auto'; startAnims(); }, 50);
             }, 1000);
         }
 
         function startAnims() {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('visible'); });
+            const obs = new IntersectionObserver((es) => {
+                es.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
             }, { threshold: 0.1 });
-            document.querySelectorAll('.anim').forEach(el => observer.observe(el));
+            document.querySelectorAll('.anim').forEach(el => obs.observe(el));
         }
 
         window.ontouchend = () => { drag = false; b.style.transition = '0.5s'; b.style.transform = 'translateY(0)'; };
