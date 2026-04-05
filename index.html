@@ -7,19 +7,21 @@
     <style>
         body { margin: 0; background: #fffaf0; font-family: 'Montserrat', sans-serif; text-align: center; overflow-x: hidden; }
         #scr { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; background: white; touch-action: none; }
-        .dr { position: absolute; top: 0; width: 50%; height: 100%; background: white; border: 1px solid #ffb6c1; transition: transform 1.2s cubic-bezier(0.7, 0, 0.3, 1); }
+        .dr { position: absolute; top: 0; width: 50%; height: 100%; background: white; border: 1px solid #ffb6c1; transition: 1.2s cubic-bezier(0.7, 0, 0.3, 1); }
         .open .dr-l { transform: translateX(-100%); } .open .dr-r { transform: translateX(100%); }
-        #cont { position: relative; z-index: 100; text-align: center; touch-action: none; }
-        #bow { width: 160px; pointer-events: none; }
+        #cont { position: relative; z-index: 100; touch-action: none; }
+        #bow { width: 160px; transition: transform 0.1s linear; }
         .main { display: none; opacity: 0; padding: 20px; transition: 1.5s; }
         .hero { width: 90%; max-width: 320px; border-radius: 20px; border: 6px solid white; box-shadow: 0 10px 20px rgba(0,0,0,0.1); margin: 20px auto; }
         .t-box { background: white; padding: 10px; border-radius: 12px; border: 1.5px solid #ff69b4; min-width: 45px; display: inline-block; margin: 0 3px; }
         .t-box span { display: block; font-size: 1.2rem; font-weight: bold; color: #ff69b4; }
-        .p-card { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 20px 0; background: white; padding: 10px; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        .p-img { width: 80px; height: 80px; object-fit: contain; }
-        .rsvp { background: white; padding: 20px; border-radius: 25px; border: 2px solid #ff69b4; margin: 30px auto; max-width: 320px; }
+        /* Անիմացիա արքայադուստրերի համար */
+        .p-card { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 20px 0; background: white; padding: 15px; border-radius: 20px; opacity: 0; transform: translateY(30px); transition: 0.8s; }
+        .p-card.visible { opacity: 1; transform: translateY(0); }
+        .p-img { width: 90px; height: 90px; object-fit: contain; }
+        .rsvp { background: white; padding: 25px; border-radius: 30px; border: 2.5px solid #ff69b4; margin: 30px auto; max-width: 320px; }
         input { width: 85%; padding: 12px; margin: 8px 0; border: 1px solid #eee; border-radius: 10px; font-size: 16px; }
-        button { background: #ff69b4; color: white; border: none; padding: 15px; width: 90%; border-radius: 35px; font-weight: bold; }
+        button { background: #ff69b4; color: white; border: none; padding: 16px; width: 90%; border-radius: 40px; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -27,53 +29,70 @@
     <div id="scr">
         <div id="cont">
             <img src="bow.png" id="bow">
-            <p style="color:#ff69b4; font-family:'Dancing Script'; font-size: 1.4rem;">Քաշիր բանտիկը ներքև</p>
+            <p style="color:#ff69b4; font-family:'Dancing Script'; font-size: 1.5rem;">Քաշիր ներքև</p>
         </div>
         <div class="dr dr-l" style="left:0"></div><div class="dr dr-r" style="right:0"></div>
     </div>
     <div class="main" id="main">
-        <h1 style="color:#ff69b4; font-family:'Dancing Script'; font-size: 2.8rem; margin: 10px 0;">Ella's 10th Birthday</h1>
+        <h1 style="color:#ff69b4; font-family:'Dancing Script'; font-size: 3rem;">Ella's 10th Birthday</h1>
         <img src="ella_photo.jpg" class="hero">
-        <div style="margin: 20px 0;">
+        <div style="margin: 25px 0;">
             <div class="t-box"><span id="d">00</span>օր</div>
             <div class="t-box"><span id="h">00</span>ժ</div>
             <div class="t-box"><span id="m">00</span>ր</div>
-            <div class="t-box" style="border-color:#d4af37;"><span id="s" style="color:#d4af37;">00</span>վ</div>
+            <div class="t-box" style="border-color:gold;"><span id="s" style="color:gold;">00</span>վ</div>
         </div>
-        <div class="p-card"><img src="belle.png" class="p-img"><div><b>17:00</b><p>Դիմավորում</p></div></div>
-        <div class="p-card" style="flex-direction:row-reverse;"><img src="snowwhite.png" class="p-img"><div><b>19:00</b><p>Խաղավար</p></div></div>
-        <div class="p-card"><img src="aurora.png" class="p-img"><div><b>21:00</b><p>Տորթ</p></div></div>
+        <div class="p-card anim"><img src="belle.png" class="p-img"><div><b>17:00</b><p>Դիմավորում Բելլի հետ</p></div></div>
+        <div class="p-card anim" style="flex-direction:row-reverse;"><img src="snowwhite.png" class="p-img"><div><b>19:00</b><p>Խաղավար Սպիտակաձյունիկ</p></div></div>
+        <div class="p-card anim"><img src="aurora.png" class="p-img"><div><b>21:00</b><p>Տորթի արարողություն</p></div></div>
         <div class="rsvp">
             <h3 style="color:#ff69b4; font-family:'Dancing Script';">RSVP</h3>
             <input type="text" id="n" placeholder="Անուն Ազգանուն">
             <input type="tel" id="ph" placeholder="Հեռախոս">
-            <input type="number" id="c" placeholder="Քանակ">
+            <input type="number" id="c" placeholder="Հյուրերի քանակ">
             <button onclick="send()">Ուղարկել WhatsApp</button>
-            <iframe style="width:100%; height:180px; border-radius:15px; border:1px solid #ffb6c1; margin-top:20px;" src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3049.20061142289!2d44.508000!3d40.160000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNDDCsDA5JzM2LjAiTiA0NMKwMzAnMjguOCJF!5e0!3m2!1shy!2s!4v1710000000000"></iframe>
+            <iframe style="width:100%; height:180px; border-radius:15px; border:1px solid #ffb6c1; margin-top:20px;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3048.2!2d44.5!3d40.1!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDA2JzAwLjAiTiA0NMKwMzAnMDAuMCJF!5e0!3m2!1shy!2s!4v1600000000000"></iframe>
         </div>
-        <p style="font-family:'Dancing Script'; font-size: 2.2rem; color:#ff69b4; margin: 30px 0;">Սիրով` Էլլա ♡</p>
+        <p style="font-family:'Dancing Script'; font-size: 2.5rem; color:#ff69b4; margin: 40px 0;">Սիրով` Էլլա ♡</p>
     </div>
     <script>
         let sY = 0, drag = false, b = document.getElementById('bow'), s = document.getElementById('scr'), m = document.getElementById('main');
+        
         document.getElementById('cont').ontouchstart = (e) => { drag = true; sY = e.touches[0].pageY; b.style.transition = 'none'; };
+        
         window.ontouchmove = (e) => {
             if (!drag) return;
             let df = e.touches[0].pageY - sY;
-            if (df > 0 && df < 150) {
+            if (df > 0 && df < 180) {
                 b.style.transform = `translateY(${df}px)`;
                 if (df >= 80) finish();
             }
         };
+
         function finish() {
             if (!drag) return; drag = false;
             document.getElementById('mus').play().catch(()=>{});
             s.classList.add('open');
             setTimeout(() => {
                 m.style.display = 'block';
-                setTimeout(() => { m.style.opacity = 1; s.style.display = 'none'; document.body.style.overflowY = 'auto'; }, 50);
+                setTimeout(() => { 
+                    m.style.opacity = 1; 
+                    s.style.display = 'none'; 
+                    document.body.style.overflowY = 'auto';
+                    startAnims();
+                }, 50);
             }, 1000);
         }
+
+        function startAnims() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('visible'); });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.anim').forEach(el => observer.observe(el));
+        }
+
         window.ontouchend = () => { drag = false; b.style.transition = '0.5s'; b.style.transform = 'translateY(0)'; };
+
         setInterval(() => {
             const diff = new Date("April 8, 2026 17:00:00") - new Date();
             if (diff > 0) {
@@ -83,6 +102,7 @@
                 document.getElementById('s').innerText = Math.floor((diff/1000)%60).toString().padStart(2,'0');
             }
         }, 1000);
+
         function send() {
             const n = document.getElementById('n').value, p = document.getElementById('ph').value, c = document.getElementById('c').value;
             window.open(`https://wa.me/37496872922?text=Ես ${n}-ն եմ (${p}): Կգանք ${c} հոգով:`, '_blank');
