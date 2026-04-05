@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { margin: 0; background: #fffaf0; font-family: 'Montserrat', sans-serif; text-align: center; overflow-x: hidden; touch-action: pan-y; }
+        body { margin: 0; background: #fffaf0; font-family: 'Montserrat', sans-serif; text-align: center; overflow-x: hidden; }
+        /* Երաժշտության կոճակը */
+        #m-btn { position: fixed; top: 20px; right: 20px; z-index: 11000; background: rgba(255, 255, 255, 0.9); border: 2px solid #ff69b4; border-radius: 50%; width: 45px; height: 45px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); font-size: 20px; }
         #scr { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; background: white; touch-action: none; }
         .dr { position: absolute; top: 0; width: 50%; height: 100%; background: white; border: 1px solid #ffb6c1; transition: 1.2s cubic-bezier(0.7, 0, 0.3, 1); }
         .open .dr-l { transform: translateX(-100%); } .open .dr-r { transform: translateX(100%); }
         #cont { position: relative; z-index: 101; text-align: center; }
-        #bow { width: 160px; cursor: grab; transition: transform 0.1s linear; }
+        #bow { width: 160px; transition: transform 0.1s linear; }
         .main { display: none; opacity: 0; padding: 20px; transition: 1.5s; }
         .hero { width: 90%; max-width: 320px; border-radius: 20px; border: 6px solid white; box-shadow: 0 10px 20px rgba(0,0,0,0.1); margin: 20px auto; }
         .t-box { background: white; padding: 10px; border-radius: 12px; border: 1.5px solid #ff69b4; min-width: 45px; display: inline-block; margin: 0 3px; }
@@ -18,12 +20,14 @@
         .p-card { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 20px 0; background: white; padding: 15px; border-radius: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .p-img { width: 85px; height: 85px; object-fit: contain; }
         .rsvp { background: white; padding: 25px; border-radius: 30px; border: 2.5px solid #ff69b4; margin: 30px auto; max-width: 320px; }
-        input { width: 90%; padding: 12px; margin: 8px 0; border: 1px solid #eee; border-radius: 10px; font-size: 16px; font-family: inherit; }
-        button { background: #ff69b4; color: white; border: none; padding: 16px; width: 95%; border-radius: 40px; font-weight: bold; font-size: 1rem; margin-top: 10px; }
+        input { width: 90%; padding: 12px; margin: 8px 0; border: 1px solid #eee; border-radius: 10px; font-size: 16px; }
+        button { background: #ff69b4; color: white; border: none; padding: 16px; width: 95%; border-radius: 40px; font-weight: bold; margin-top: 10px; }
     </style>
 </head>
 <body>
+    <div id="m-btn" onclick="toggleMusic()">🎵</div>
     <audio id="mus" src="music.mp3" loop preload="auto" playsinline></audio>
+
     <div id="scr">
         <div id="cont">
             <img src="bow.png" id="bow">
@@ -31,15 +35,18 @@
         </div>
         <div class="dr dr-l" style="left:0"></div><div class="dr dr-r" style="right:0"></div>
     </div>
+
     <div class="main" id="main">
         <h1 style="color:#ff69b4; font-family:'Dancing Script'; font-size: 3rem; margin: 10px 0;">Ella's 10th Birthday</h1>
         <img src="ella_photo.jpg" class="hero">
+        
         <div style="margin: 25px 0;">
             <div class="t-box"><span id="d">00</span>օր</div>
             <div class="t-box"><span id="h">00</span>ժ</div>
             <div class="t-box"><span id="m">00</span>ր</div>
             <div class="t-box" style="border-color:gold;"><span id="s" style="color:gold;">00</span>վ</div>
         </div>
+
         <div class="p-card"><img src="belle.png" class="p-img"><div><b>17:00</b><p>Դիմավորում Բելլի հետ</p></div></div>
         <div class="p-card" style="flex-direction:row-reverse;"><img src="snowwhite.png" class="p-img"><div><b>19:00</b><p>Խաղավար Սպիտակաձյունիկ</p></div></div>
         <div class="p-card"><img src="aurora.png" class="p-img"><div><b>21:00</b><p>Տորթի արարողություն</p></div></div>
@@ -50,16 +57,28 @@
             <input type="number" id="count" placeholder="Հյուրերի քանակ">
             <button onclick="sendWA()">Հաստատել մասնակցությունը</button>
             <h4 style="color:#ff69b4; margin-top:20px;">Գտնվելու վայրը</h4>
-            <iframe style="width:100%; height:180px; border-radius:15px; border:1px solid #ffb6c1;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3048.243547466547!2d44.5126!3d40.1776!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDEwJzM5LjQiTiA0NMKwMzAnNDUuNCJF!5e0!3m2!1shy!2s!4v1611111111111"></iframe>
+            <iframe style="width:100%; height:180px; border-radius:15px; border:1px solid #ffb6c1;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3048.064506041042!2d44.5126!3d40.1776!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDEwJzM5LjQiTiA0NMKwMzAnNDUuNCJF!5e0!3m2!1sen!2s!4v1620000000000"></iframe>
         </div>
         <p style="font-family:'Dancing Script'; font-size: 2.5rem; color:#ff69b4; margin: 40px 0;">Սիրով` Էլլա ♡</p>
     </div>
+
     <script>
-        let sY = 0, drag = false, b = document.getElementById('bow'), s = document.getElementById('scr'), m = document.getElementById('main'), audio = document.getElementById('mus');
+        let sY = 0, drag = false, b = document.getElementById('bow'), s = document.getElementById('scr'), m = document.getElementById('main'), audio = document.getElementById('mus'), mBtn = document.getElementById('m-btn');
+
+        // Երաժշտության միացնել/անջատել
+        function toggleMusic() {
+            if (audio.paused) {
+                audio.play();
+                mBtn.innerText = "🔇";
+            } else {
+                audio.pause();
+                mBtn.innerText = "🎵";
+            }
+        }
 
         b.addEventListener('touchstart', (e) => {
             drag = true; sY = e.touches[0].pageY; b.style.transition = 'none';
-            audio.play().catch(() => {}); // Փորձում ենք միացնել հենց հպվելիս
+            audio.play().then(() => { mBtn.innerText = "🔇"; }).catch(() => {});
         });
 
         window.addEventListener('touchmove', (e) => {
@@ -72,7 +91,6 @@
         });
 
         function finish() {
-            audio.play().catch(() => {});
             s.classList.add('open');
             setTimeout(() => {
                 m.style.display = 'block';
@@ -83,7 +101,7 @@
         window.addEventListener('touchend', () => { if(drag){ drag=false; b.style.transition='0.5s'; b.style.transform='translateY(0)'; } });
 
         setInterval(() => {
-            const diff = new Date("April 8, 2026 17:00:00") - new Date();
+            const diff = new Date("June 4, 2026 18:00:00") - new Date();
             if (diff > 0) {
                 document.getElementById('d').innerText = Math.floor(diff/86400000).toString().padStart(2,'0');
                 document.getElementById('h').innerText = Math.floor((diff/3600000)%24).toString().padStart(2,'0');
@@ -96,7 +114,7 @@
             const name = document.getElementById('name').value;
             const phone = document.getElementById('phone').value;
             const count = document.getElementById('count').value;
-            if(!name || !phone) return alert("Խնդրում ենք լրացնել Անունը և Հեռախոսը");
+            if(!name || !phone) return alert("Լրացրեք տվյալները");
             let msg = `Ողջույն, ես ${name}-ն եմ (${phone}): Կգանք ${count} հոգով:`;
             window.open(`https://wa.me/37496872922?text=${encodeURIComponent(msg)}`, '_blank');
         }
